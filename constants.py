@@ -1,7 +1,7 @@
 from vertexai.generative_models import HarmCategory, HarmBlockThreshold, SafetySetting
 
 GC_PROJECT_NAME = 'arvato-developments'
-LOCATION = 'asia-southeast1'
+LOCATION = 'us-central1'
 
 
 YOUTUBE_API_KEY = 'YOUTUBE_API_KEY'

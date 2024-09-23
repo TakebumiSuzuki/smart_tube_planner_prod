@@ -1,4 +1,4 @@
-import constants as K
+import constants as const
 import os
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
@@ -9,14 +9,14 @@ from vertexai.generative_models import GenerativeModel
 load_dotenv()
 
 vertexai.init(
-    project = K.GC_PROJECT_NAME,
-    location = K.LOCATION
+    project = const.GC_PROJECT_NAME,
+    location = const.LOCATION
 )
 
 youtube = build(
     'youtube',
     'v3',
-    developerKey = os.getenv(K.YOUTUBE_API_KEY)
+    developerKey = os.getenv(const.YOUTUBE_API_KEY)
 )
 
 def get_id_directly(url):
@@ -119,21 +119,21 @@ def ask_youtube(url):
     if channel_id is None:
         return 'Channel id was not found'
 
-    top_video_list = get_top_videos(channel_id, K.MAX_TOP_VIDEOS)
+    top_video_list = get_top_videos(channel_id, const.MAX_TOP_VIDEOS)
 
     return top_video_list
 
 
 
 def ask_llm(top_video_list):
-    model = GenerativeModel(K.GEMINI_MODEL_NAME)
+    model = GenerativeModel(const.GEMINI_MODEL_NAME)
 
-    prompt = K.PROMPT_TEMPLATE + top_video_list
+    prompt = const.PROMPT_TEMPLATE + top_video_list
     print(prompt)
     return model.generate_content(
         prompt,
-        safety_settings=K.SAFTY_SETTINGS,
-        generation_config=K.GENERATION_CONFIG,
+        safety_settings=const.SAFTY_SETTINGS,
+        generation_config=const.GENERATION_CONFIG,
         stream = True
     )
 

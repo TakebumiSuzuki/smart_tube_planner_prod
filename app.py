@@ -1,16 +1,16 @@
-import constants as K
+import constants as const
 import streamlit as st
 import logic as f
 import time
 import random
 
 st.set_page_config(
-    page_title = K.TAB_TITLE,
+    page_title = const.TAB_TITLE,
 )
 
-st.markdown(K.CSS, unsafe_allow_html=True)
+st.markdown(const.CSS, unsafe_allow_html=True)
 
-st.title(K.TITLE)
+st.title(const.TITLE)
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -22,7 +22,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # Accept user input
-if url := st.chat_input(K.INPUT_HOLDER):
+if url := st.chat_input(const.INPUT_HOLDER):
 
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": url})
@@ -37,19 +37,19 @@ if url := st.chat_input(K.INPUT_HOLDER):
         elem = "1. " + elem
         list.append(elem)
     text = "  \n".join(list)
-    text2 = K.TITLE_TOP7 + text
+    text2 = const.TITLE_TOP7 + text
 
-    st.session_state.messages.append({"role": K.AI, "content": text})
-    with st.chat_message(K.AI):
+    st.session_state.messages.append({"role": const.AI, "content": text})
+    with st.chat_message(const.AI):
         st.markdown(text2)
 
 
     full_response = ""
     stream = f.ask_llm(text)
 
-    with st.chat_message(K.AI):
+    with st.chat_message(const.AI):
         message_placeholder = st.empty()
-        message_placeholder.markdown(K.NOW_PROCESSING)
+        message_placeholder.markdown(const.NOW_PROCESSING)
         try:
             for chunk in stream:
                 word_count = 0
@@ -68,7 +68,7 @@ if url := st.chat_input(K.INPUT_HOLDER):
         except Exception as e:
             f.error_handling(e)
 
-        st.session_state.messages.append({"role": K.AI, "content": full_response})
+        st.session_state.messages.append({"role": const.AI, "content": full_response})
 
 
 
